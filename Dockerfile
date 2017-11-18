@@ -10,7 +10,7 @@ ENV VPNPASS ''
 ENV TZ=Asia/Shanghai
 
 # strongSwan Version
-ARG SS_VERSION="https://download.strongswan.org/strongswan-5.6.0.tar.gz"
+ARG SS_VERSION="https://download.strongswan.org/strongswan-5.6.1.tar.gz"
 
 # Install dep packge , Configure,make and install strongSwan
 RUN apk --update add build-base curl bash iproute2 iptables-dev openssl openssl-dev supervisor && mkdir -p /tmp/strongswan \
