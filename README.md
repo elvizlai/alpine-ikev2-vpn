@@ -1,18 +1,19 @@
-# A runing IKEv2 VPN's container on apline linux system
+# A runing IKEv2 VPN's container on alpine linux system
 ## Overview ##
 Let the IKEv2 vpn service run in the Docker container, do not need too much configuration, you just take the mirror on the Docker server, then run a container, the container generated certificate copy installed on your client, you can connect vpn The server. Welcome everyone's discussion！:blush:
 
 ## Features
-* based on apline image and Using supervisor to protect the IPSec process
+* based on alpine image and Using supervisor to protect the IPSec process
 * StrongSwan provides ikev2 VPN service
 * In addition to Android and Linux, but other devices(Winodws 7+,Mac,iOS) by default comes with IKEv2 dial clients
 * When the container is run, the certificate file is dynamically generated based on the environment variable (last version)
-* Combined with Freeradius achieve Authentication, authorization, and accounting (AAA) (last version)
+* Combined with Freeradius achieve Authentication, authorization, and accounting (AAA) (Done -> v0.1)
 
 ## Prerequisites
 * The host can use physical machines, virtual machines, and VPS.
 * The host machines and containers must be opened within ip_forward （net.ipv4.ip_forward）
 * The host machines Install Docker engine.
+* Support eap authentication radius server(EAP-RADIUS)
 
 ## Usage examples
 1. Clone git
@@ -30,12 +31,25 @@ Then run `docker run` command.
 ```Bash
 # cd alpine-ikev2-vpn/
 # docker build -t ikev2 .
-# docker run -itd --privileged -v /lib/modules:/lib/modules -e HOSTIP='Your's Public network IP' -e VPNUSER=jack -e VPNPASS="jack&opsAdmin" -p 500:500/udp -p 4500:4500/udp --name=ikev2-vpn ikev2
 ```
-    **HOSTIP :Public network must be your host IP**
+
+* eap-mschapv2 mode
+```bash
+# docker run -itd --privileged -v /lib/modules:/lib/modules -e HOST_IP='Your's Public network IP' -e VPNUSER=jack -e VPNPASS="jack&opsAdmin" -p 500:500/udp -p 4500:4500/udp --name=ikev2-vpn ikev2
+```
+    **HOST_IP :Public network must be your host IP**
     **[$VPNUSER] & [$VPNPASS] env Optional,The function is to customize the user name and password to connect to the VPN service.**
     **Defalut vpnuser is testUserOne,passwd is testOnePass**
 
+* eap-radius mode
+```bash
+# docker run -itd --privileged -v /lib/modules:/lib/modules -e HOST_IP='Your's Public network IP' -e ACCOUNTING='yes' -e RADIUS_PORT='1812' -e RADIUS_SERVER='Your's radius server IP' -e RADIUS_SECRET='xxxxxxx' -e EAP_TYPE='eap-radius' -p 500:500/udp -p 4500:4500/udp --name=ikev2-vpn ikev2
+```
+    **ACCOUNTING: eap-radius mode Required.Value must be 'yes'
+    **RADIUS_PORT: radius server running port. Required.
+    **RADIUS_SERVER: radius server ip. Required.
+    **RADIUS_SECRET: radius nas client psk. Required.
+    **EAP_TYPE: ikev2 auth mode. Required.
 
 3. Use the following command to generate the certificate and view the certificate contents
 ```Bash
@@ -101,4 +115,3 @@ This project is licensed under the GNU General Public License - see the [LICENSE
 
 ## Acknowledgments
 https://www.strongswan.org/
-
