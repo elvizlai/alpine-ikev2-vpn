@@ -2,7 +2,7 @@
 FROM alpine:latest
 
 # Define a dynamic variable for Certificate CN
-ENV HOSTIP ''
+ENV HOST_IP ''
 ENV VPNUSER ''
 ENV VPNPASS ''
 ENV TZ=Asia/Shanghai
