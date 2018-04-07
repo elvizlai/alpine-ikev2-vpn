@@ -115,3 +115,12 @@ This project is licensed under the GNU General Public License - see the [LICENSE
 
 ## Acknowledgments
 https://www.strongswan.org/
+
+## Public cert
+```
+ln -s -f /path/path.ca /usr/local/etc/ipsec.d/cacerts/ca.cert.pem
+ln -s -f /path/path.pem /usr/local/etc/ipsec.d/certs/server.cert.pem
+ln -s -f /path/path.pem /usr/local/etc/ipsec.d/certs/client.cert.pem
+ln -s -f /path/path.key /usr/local/etc/ipsec.d/private/server.pem
+ln -s -f /path/path.key /usr/local/etc/ipsec.d/private/client.pem
+```
