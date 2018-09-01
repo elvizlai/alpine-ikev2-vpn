@@ -4,7 +4,7 @@
 :FORWARD ACCEPT [0:0]
 :OUTPUT ACCEPT [0:0]
 :POSTROUTING ACCEPT [0:0]
--A FORWARD -s 17.7.10.0/24 -o eth0 -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360
+-A FORWARD -s 10.28.0.0/24 -o eth0 -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 -j TCPMSS --set-mss 1360
 COMMIT
 *filter
 :INPUT ACCEPT [0:0]
@@ -19,7 +19,7 @@ COMMIT
 -A INPUT -j REJECT --reject-with icmp-host-prohibited
 #
 -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
--A FORWARD -s 17.7.10.0/24 -j ACCEPT
+-A FORWARD -s 10.28.0.0/24 -j ACCEPT
 -A FORWARD -j REJECT --reject-with icmp-host-prohibited
 COMMIT
 *nat
@@ -27,5 +27,5 @@ COMMIT
 :INPUT ACCEPT [5:241]
 :OUTPUT ACCEPT [18:1422]
 :POSTROUTING ACCEPT [18:1422]
--A POSTROUTING -s 17.7.10.0/24 -o eth0 -j MASQUERADE
+-A POSTROUTING -s 10.28.0.0/24 -o eth0 -j MASQUERADE
 COMMIT
