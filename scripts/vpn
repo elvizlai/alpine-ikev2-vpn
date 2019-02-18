@@ -33,7 +33,7 @@ if [ "`ls -A`" = "" ]; then
     echo "______________________________________________________________"
     cat /data/key_files/ca.cert.pem
 else
-    echo "/data/key_files is not empty, using provided certificate"
+    echo "/data/key_files dir is not empty, using provided certificate"
     \cp *.crt /usr/local/etc/ipsec.d/cacerts/ca.cert.pem
     \cp *.cer /usr/local/etc/ipsec.d/certs/server.cert.pem
     \cp *.key /usr/local/etc/ipsec.d/private/server.pem
