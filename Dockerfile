@@ -10,7 +10,7 @@ ENV VPNPASS ''
 ENV TZ=Asia/Shanghai
 
 # strongSwan Version
-ARG SS_VERSION="https://download.strongswan.org/strongswan-5.8.4.tar.gz"
+ARG SS_VERSION="https://download.strongswan.org/strongswan-5.9.0.tar.gz"
 
 # download en
 ARG BUILD_DEPS="gettext"
@@ -49,4 +49,5 @@ EXPOSE 500:500/udp 4500:4500/udp
 #CMD ["/usr/bin/supervisord"]
 ADD init.sh /init.sh
 RUN chmod +x /init.sh
+RUN ln -sf /dev/stdout /var/log/ikev2.log
 ENTRYPOINT ["/init.sh", "/usr/bin/supervisord", "--nodaemon", "--configuration", "/etc/supervisord.conf"]

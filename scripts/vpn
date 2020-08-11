@@ -1,6 +1,4 @@
 #!/bin/bash
-#Author by @aliasmee
-#Time 2018-03-6 01:10
 
 if [ -z "$O" ]; then 
     O=vpn
@@ -9,7 +7,6 @@ fi
 if [ -z "$CN" ]; then 
     CN=$HOST_IP
 fi
-
 
 cd /data/key_files
 if [ "`ls -A`" = "" ]; then
@@ -39,17 +36,12 @@ else
     \ln -s -f /data/key_files/*.key /usr/local/etc/ipsec.d/private/server.pem
 fi
 
-
-# Enable system forward
-sysctl -w net.ipv4.ip_forward=1
-sysctl -w net.ipv4.ip_no_pmtu_disc=1
-
-# Load iptables rules
-iptables-restore < /etc/sysconfig/iptables
-
-# Custom connection VPN username password
-sed -i "$ a $VPNUSER %any : EAP '$VPNPASS'"  /usr/local/etc/ipsec.secrets
+if [ -n "$VPNUSER" ] && [ -n "$VPNPASS" ] && [ `cat /usr/local/etc/ipsec.secrets | grep -c "$VPNUSER %any"` -eq 0 ]; then 
+    # Custom connection VPN username password
+    sed -i "$ a $VPNUSER %any : EAP \"$VPNPASS\""  /usr/local/etc/ipsec.secrets
+fi
 
 # Reboot ipsec vpn loading cert
-supervisorctl restart ipsec
-
+if [ "$1" != "skip" ];then
+    supervisorctl restart ipsec
+fi

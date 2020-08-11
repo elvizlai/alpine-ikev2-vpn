@@ -45,4 +45,6 @@ envsubst '
          ${HOST_IP}
          ' < ipsec.conf.template > /usr/local/etc/ipsec.conf
 
+sh /usr/bin/vpn skip
+
 exec "$@"
