@@ -49,14 +49,14 @@ running_docker(){
 # pull image command
 pull_image(){
   echo -e "\n*************** Pull ikev2 vpn image from docker hub... ***************"
-  sudo docker pull hanyifeng/alpine-ikev2-vpn
+  sudo docker pull sdrzlyz/ikev2
 }
 
 # run command
 run_docker(){
     sudo docker run --restart=always -itd --privileged -v /lib/modules:/lib/modules \
 -e HOST_IP=$PUBLIC_IP -e VPNUSER=$VPNUSER -e VPNPASS="$VPNPASS" \
--p 500:500/udp -p 4500:4500/udp --name=ikev2-vpn hanyifeng/alpine-ikev2-vpn
+-p 500:500/udp -p 4500:4500/udp --name=ikev2-vpn sdrzlyz/ikev2
 }
 
 # Run ikev2 server
