@@ -8,7 +8,7 @@ ENV VPNPASS ''
 ENV TZ=Asia/Shanghai
 
 # strongSwan Version
-ARG VERSION=5.9.2
+ARG VERSION=5.9.3
 
 # download en
 ARG BUILD_DEPS="gettext"
